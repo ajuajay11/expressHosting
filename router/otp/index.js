@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Otp = require('../../models/otpSchema.js')
 const { Resend } = require('resend');
-
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 router.post("/send-otp", async (req, res) => {
+  console.log("hei bitch");
+  
     try {
         const { email, category } = req.body;
         console.log(req.body);
@@ -78,6 +79,26 @@ router.post("/send-otp", async (req, res) => {
             );
         }
         res.status(200).json({ message: `otp send successfully... please check your ${email}` })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "otp send successfully..." })
+    }
+})
+
+router.post("/verify-otp", async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+        if (!email || !otp) {
+          return res.status(400).json({ message: "Email and otp are required." });
+        }
+        const findOtp = await Otp.findOne({email});
+        if(!findOtp){
+          res.status(404).json({message:"email not found"})
+        }
+        if(findOtp.otp !== otp) {
+          return res.status(401).json({message:"helloooo, what u doing bloody hell"})
+        };
+        res.status(200).json({ message: `Email Verified Sucessfully` })
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "otp send successfully..." })
