@@ -1,25 +1,54 @@
-const express = require('express');
-const connectToDatabase = require("./lib/connectMongo");
-const cors = require('cors');
-const app = express();
-const port = 3000;
-const dotenv =require("dotenv");
-dotenv.config();
-const routeData = require('./router')
+const express = require("express");
+const http = require("http");
 
+const connectToDatabase = require("./lib/connectMongo");
+const cors = require("cors");
+const app = express();
+const dotenv = require("dotenv");
+dotenv.config();
+const routeData = require("./router");
+const server = http.createServer(app);
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(cors());
 connectToDatabase();
 
-// Sample route
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+const { Server } = require("socket.io");
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Adjust this to your client's origin in production
+    methods: ["GET", "POST"],
+  },
 });
-app.use('/api', routeData);
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
+
+  socket.on("chat message", (msg) => {
+    console.log("message: " + msg);
+    io.emit("chat message", msg);
+  });
 });
+
+// Sample route
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+app.use("/api", routeData);
+
+const PORT = process.env.PORT || 3000;
+
+// ONLY listen on 'server', NOT 'app'
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
+
+// ❌ REMOVE THIS LINE - it's causing the conflict
+// app.listen(port, () => {
+//   console.log(`Server is running at http://localhost:${port}`);
+// });

@@ -2,7 +2,7 @@
   "name": "esports",
   "version": "1.0.0",
   "main": "server.js",
-   "scripts": {
+  "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
@@ -13,12 +13,25 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.3",
-    "resend": "^6.4.2"
+    "resend": "^6.4.2",
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "There are 2 roles - Admin and participants",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajuajay11/ESports.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/ajuajay11/ESports/issues"
+  },
+  "homepage": "https://github.com/ajuajay11/ESports#readme"
 }

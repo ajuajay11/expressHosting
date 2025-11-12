@@ -28,15 +28,12 @@ Player Roles =>
 10. After the completion of round we split the reward amount to you wallet based on the prize pool. 
 11. If you want to see your previous matched , You can see in the dashboard proffile page.
 
-ROUND OF 2, 4, 8, 16
+ 
 
-1 1 1 1
+ redux tool kit 
 
-  1 1
+ first we need to create a store.js and import to main.js to access as a global store to access everywhere , before that ineed to provide the redux tool kit provide fragment in the main.js
 
-   1 
-
-MATCH TIMING:1 hour;
-TOTAL MATCH TIMING : 6 HORUS
-OPPONENTS : [{name:'ajay', userId:11},{name:'b', userId:22},{name:'c', userId:44},{name:'d', userId:44}];
-RESULTS:
+ eg like <Provider what we need to provide store right so ={store}>
+ indise we need to add route or <App/>
+ and close </Provider?
