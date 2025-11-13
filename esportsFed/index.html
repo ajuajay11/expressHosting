@@ -4,26 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>esportsfed</title>
+    <title>Esports Fed</title>
   </head>
   <body>
-    <h1>Socket.IO Connection Test</h1>
-    <div id="status">Connecting...</div>
-
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <script>
-        const socket = io('http://localhost:3000');
-        
-        socket.on('connect', () => {
-            console.log('Connected to server!');
-            document.getElementById('status').textContent = 'Connected! ✅';
-        });
-
-        socket.on('disconnect', () => {
-            console.log('Disconnected from server');
-            document.getElementById('status').textContent = 'Disconnected ❌';
-        });
-    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

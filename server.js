@@ -17,7 +17,7 @@ connectToDatabase();
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: "*", // Adjust this to your client's origin in production
+    origin: "*", 
     methods: ["GET", "POST"],
   },
 });
@@ -47,8 +47,3 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-
-// ❌ REMOVE THIS LINE - it's causing the conflict
-// app.listen(port, () => {
-//   console.log(`Server is running at http://localhost:${port}`);
-// });

@@ -17,15 +17,20 @@ router.get("/", verifyToken, async (req, res) => {
 
 router.post("/register", async (req, res) => {
   const { firstname, lastname, age, phone, username, email, password } = req.body;
-  const fields = { firstname, lastname, age, phone, username, email, password };
+  const fields = { firstname, lastname, age, phone, email, password };
   for (const [key, value] of Object.entries(fields)) {
     if (!value) {
       return res.status(401).json({ message: `${key} not provided` })
     }
   }
   try {
-    const user = new User(fields);
-    await user.save()
+     // generate username if missing
+   const finalUsername = username || `${firstname.toLowerCase()}${Math.floor(Math.random() * 1000)}${Date.now().toString().slice(-4)}`;
+    const user = new User({
+      ...fields,
+      username: finalUsername
+    });
+    await user.save();
     res.status(200).json({ message: "User login successfully", user });
   } catch (error) {
     console.log(error);

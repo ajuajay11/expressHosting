@@ -1,27 +1,19 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const matchSchem = new mongoose.Schema({
-    rounds:{
-        required:true,
-        type:Number
-    },
-    match_time:{
-        required:true,
-        type:String
-    },
-    total_match_time:{
-        required:true,
-        type:String
-    },
-    opponents:{
-        type:String,
-        required:true
-    },
-    results:{
-        
-    }
-})
+const participantSchema = new mongoose.Schema({
+  userId: { type: String, required: true },
+  username: { type: String, required: true },
+  joinedAt: { type: Date, default: Date.now },
+  isConnected: { type: Boolean, default: true } // for socket tracking only
+});
 
-const match = mongoose.model('match', matchSchem);
-module.exports= match;
+const matchSchema = new mongoose.Schema({
+  matchId: { type: String, required: true, unique: true },  // room ID
+  password: { type: String, required: true },               // room password
+
+  participants: [participantSchema] // users who joined
+});
+ 
+const Match = mongoose.model("Match", matchSchema);
+
+module.exports = Match;
